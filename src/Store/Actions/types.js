@@ -1,0 +1,3 @@
+//auth
+export const GET_USERPROFILE = 'GET_USERPROFILE';
+export const GET_SIGNINAUTH = 'GET_SIGNINAUTH';
