@@ -12,12 +12,19 @@ const Input = React.memo(
     secureTextEntry,
     Error,
     ErrorTitle,
+    multiline,
   }) => {
-    let [TextValue, setTextValue] = useState('');
+    const [Value, OnTextChange] = useState('');
+
+    const textChangeHandler = text => {
+      onChangeText(text);
+      OnTextChange(text);
+    };
 
     return (
       <View>
         <TextInput
+          multiline={multiline ? multiline : false}
           secureTextEntry={secureTextEntry ? secureTextEntry : false}
           style={[styles.textInput, InputStyle]}
           placeholderStyle={{fontSize: 30}}
@@ -25,12 +32,9 @@ const Input = React.memo(
           placeholder={PlaceHolder}
           placeholderTextColor={'#000'}
           maxLength={maxLength ? maxLength : 150}
-          value={TextValue}
+          value={Value}
           underlineColorAndroid={'#167BE0'}
-          onChangeText={text => {
-            onChangeText(text);
-            setTextValue(text);
-          }}
+          onChangeText={textChangeHandler}
         />
         {Error && <Text style={styles.ErrorTxt}>{ErrorTitle}</Text>}
       </View>

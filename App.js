@@ -12,6 +12,8 @@ import configureStore from './src/Store/configureStore';
 
 import {NavigationContainer} from '@react-navigation/native';
 
+import {navigationRef} from './src/Navigation/RootNavigation';
+
 import MainStackNavigator from './src/Navigation';
 
 const store = configureStore(initialState);
@@ -25,7 +27,7 @@ const App = () => {
         backgroundColor={Colors.MainColor}
         barStyle={'light-content'}
       />
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}>
         <MainStackNavigator />
       </NavigationContainer>
     </Provider>

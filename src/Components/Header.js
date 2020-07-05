@@ -48,17 +48,25 @@ const Header = props => (
           style={styles.NavIconContainer}
           onPress={props.onPressLeft}>
           {props.BackButton && (
-            <Icon name="arrow-left" color={'#7AABFF'} size={22} />
+            <Icon
+              name="arrow-left"
+              color={props.IconColor ? props.IconColor : '#7AABFF'}
+              size={22}
+            />
           )}
         </TouchableOpacity>
-        <View style={styles.ContainerTitle}>
+        <View style={[styles.ContainerTitle, props.ContainerTitle]}>
           <Text style={[styles.Title, props.titleStyle]}>{props.Title}</Text>
         </View>
         <TouchableOpacity
           style={styles.NavIconRightContainer}
           onPress={props.onPressRight}>
           {props.IconRightName && (
-            <Icon name={props.IconRightName} color={'#7AABFF'} size={22} />
+            <Icon
+              name={props.IconRightName}
+              color={props.IconColor ? props.IconColor : '#7AABFF'}
+              size={22}
+            />
           )}
         </TouchableOpacity>
       </View>
@@ -86,7 +94,7 @@ const styles = StyleSheet.create({
   NavIconContainer: {
     alignSelf: 'center',
     justifyContent: 'center',
-    marginLeft: 15,
+    marginLeft: 10,
   },
 
   container: {

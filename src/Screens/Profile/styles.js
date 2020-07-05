@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+
   ProfilePic: {
     width: 132.3,
     height: 132.3,
@@ -12,10 +13,12 @@ const styles = StyleSheet.create({
     borderRadius: 132.3 / 2,
     alignSelf: 'center',
     marginTop: 100 / 2,
+    marginBottom: 35,
   },
+
   Input: {
     width: '70%',
-    marginTop: 25,
+    marginTop: 10,
     backgroundColor: '#f1f1f1',
     marginStart: 0,
     marginEnd: 0,

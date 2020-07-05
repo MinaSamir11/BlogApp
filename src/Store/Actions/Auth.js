@@ -8,7 +8,9 @@ export const SignInAuth = Body => {
   return async dispatch => {
     try {
       let response = await Api.get(
-        `?Email=${Body.Email}&Password=${Body.Password}`,
+        `MinaSamir11/UserProfileAPi/data?Email=${Body.Email}&Password=${
+          Body.Password
+        }`,
       );
       if (response) {
         if (response.data[0]) {
@@ -30,7 +32,7 @@ export const SignInAuth = Body => {
         }
       }
     } catch (ex) {
-      dispatch(setUserProfile({Status: 500}));
+      dispatch(setUserProfile({Status: 50}));
     }
   };
 };

@@ -5,7 +5,7 @@ import Api from '../../Utils/Api';
 export const GetUserProfile = id => {
   return async dispatch => {
     try {
-      let response = await Api.get(`?_id=${id}`);
+      let response = await Api.get(`MinaSamir11/UserProfileAPi/data?_id=${id}`);
       if (response) {
         if (response.data[0]) {
           //if we get data then user found in our DB
@@ -24,7 +24,7 @@ export const GetUserProfile = id => {
         }
       }
     } catch (ex) {
-      dispatch(setUserProfile({Status: 500}));
+      dispatch(setUserProfile({Status: 50}));
       console.log('Ex', ex);
     }
   };

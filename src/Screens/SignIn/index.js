@@ -43,7 +43,7 @@ const SignIn = props => {
       dispatch(setUserProfile({...UserInfo, Status: 0}));
 
       props.navigation.dispatch(StackActions.replace('TabBottomNavigator'));
-    } else if (UserInfo.Status == 500) {
+    } else if (UserInfo.Status == 50) {
       IsLoadingModalVisible(false);
 
       setMessagePopUp('No internet Connection');
@@ -166,7 +166,7 @@ const SignIn = props => {
         Error={formState.Account.ErrorEmail}
         PlaceHolder={'Email'}
         ErrorTitle={'In-valid Email'}
-        onChangeText={OnChangeEmail}
+        onChangeText={text => OnChangeEmail(text)}
         maxLength={35}
       />
       <Input
@@ -175,7 +175,7 @@ const SignIn = props => {
         secureTextEntry
         maxLength={35}
         PlaceHolder={'Password'}
-        onChangeText={OnChangePassword}
+        onChangeText={text => OnChangePassword(text)}
         InputStyle={{marginTop: 30}}
       />
 

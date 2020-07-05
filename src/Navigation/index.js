@@ -6,6 +6,10 @@ import SignIn from '../Screens/SignIn';
 
 import UserProfile from '../Screens/Profile';
 
+import Blogs from '../Screens/Blogs';
+
+import AddPost from '../Screens/AddPost';
+
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -15,6 +19,7 @@ import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from '../Assets';
 
 const Stack = createStackNavigator();
+
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
@@ -37,10 +42,19 @@ const BottomTabNavigator = () => {
         activeTintColor: '#FB6261',
         inactiveTintColor: Colors.GreyWhite,
       }}>
-      <Tab.Screen name="Blogs" component={SignIn} />
-      <Tab.Screen name="Favourites" component={UserProfile} />
+      <Tab.Screen name="Blogs" component={StackBlogs} />
+      <Tab.Screen name="Favourites" component={SignIn} />
       <Tab.Screen name="Profile" component={UserProfile} />
     </Tab.Navigator>
+  );
+};
+
+const StackBlogs = () => {
+  return (
+    <Stack.Navigator headerMode="none">
+      <Stack.Screen name="BlogsScreen" component={Blogs} />
+      <Stack.Screen name="AddPost" component={AddPost} />
+    </Stack.Navigator>
   );
 };
 

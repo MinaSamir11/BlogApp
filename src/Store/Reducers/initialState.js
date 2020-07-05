@@ -5,4 +5,9 @@ export default {
   Profile: {
     UserProfile: null,
   },
+  Blogs: {
+    StatusBlogResponse: null,
+    StatusAddPostResponse: null,
+    AllBlogs: [],
+  },
 };
