@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 
-import {View, Image} from 'react-native';
+import {View} from 'react-native';
 
 import Styles from './styles';
 
@@ -11,6 +11,8 @@ import {Icons} from '../../Assets';
 import {useDispatch, useSelector} from 'react-redux';
 
 import * as BLogsActions from '../../Store/Actions/Blogs';
+
+import MapView from 'react-native-maps';
 
 const AddPost = props => {
   const dispatch = useDispatch();
@@ -24,8 +26,6 @@ const AddPost = props => {
   const [Title, setTitle] = useState('');
 
   const [Descp, setDescp] = useState('');
-
-  const [LeftBtnName, setLeftBtnName] = useState('');
 
   const [Submit, setBtn] = useState('Submit');
 
@@ -41,6 +41,7 @@ const AddPost = props => {
       type: 'UPDATE_RESPONSE',
     };
   };
+
   useEffect(() => {
     if (StatusAddPostResponse != null) {
       if (StatusAddPostResponse == 200) {
@@ -52,7 +53,6 @@ const AddPost = props => {
         setBtn('Retry');
         dispatch(setResponse(null));
         setVisiabiltyPopUp(true);
-        setLeftBtnName('OK');
       }
     }
   }, [StatusAddPostResponse]);
@@ -89,7 +89,6 @@ const AddPost = props => {
       );
     } else {
       setMessagePopUp('Please fill the field');
-      setLeftBtnName('Ok');
       setVisiabiltyPopUp(true);
     }
   };
@@ -136,10 +135,21 @@ const AddPost = props => {
         onPress={OnSubmit}
       />
 
+      <View style={{flex: 1}}>
+        <MapView
+          style={{flex: 1}}
+          region={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.0121,
+          }}
+        />
+      </View>
       <PopUp
         visible={PopupModel}
         message={MessagePopUp}
-        LeftBtnName={LeftBtnName}
+        LeftBtnName={'Ok'}
         topIcon={Icons.WrongPopUp}
         LeftBtnFunction={PopupactionFunLeft}
       />
