@@ -31,8 +31,8 @@ class Api {
     return server.post(...args);
   }
 
-  static delete(...args) {
-    let server = this.create();
+  static delete(baseURL, ...args) {
+    let server = this.create(baseURL);
 
     return server.delete(...args);
   }

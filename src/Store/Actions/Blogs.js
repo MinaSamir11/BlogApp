@@ -5,7 +5,7 @@ import Api from '../../Utils/Api';
 import * as RootNavigation from '../../Navigation/RootNavigation';
 
 export const Get_AllUsersBlogs = () => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       // let UsersResponse = await Api.get(`MinaSamir11/UserProfileAPi/data`);
 
@@ -15,7 +15,12 @@ export const Get_AllUsersBlogs = () => {
 
       let PostsResponse = await Api.get('http://192.168.1.3:3000', `/Posts`);
 
-      if (UsersResponse && PostsResponse) {
+      let FavouriteResponse = await Api.get(
+        'http://192.168.1.3:5000',
+        `/Favourites?iduser=${getState().Auth.UserInfo['_id']}`,
+      );
+
+      if (UsersResponse && PostsResponse && FavouriteResponse) {
         let AllBlogs = [];
 
         for (var i = 0; i < PostsResponse.data.length; i++) {
@@ -25,11 +30,17 @@ export const Get_AllUsersBlogs = () => {
             return User._id === PostsResponse.data[i]['_id'];
           });
 
+          let IsPostInFavourite = FavouriteResponse.data.find(FavoutirePost => {
+            return FavoutirePost.idpost == PostsResponse.data[i]['id'];
+          });
+
           Blog.Name = user.Name;
 
           Blog.Photo = user.Photo;
 
-          Blog.mFavourties = false;
+          Blog.mFavourtiesID = IsPostInFavourite
+            ? IsPostInFavourite['id']
+            : null;
 
           const date1 = new Date(PostsResponse.data[i]['Date']);
           const date2 = new Date();
@@ -80,6 +91,7 @@ export const AddPost = Post => {
           DaysLeftPost: 'Today',
           Name: getState().Auth.UserInfo['Name'],
           Photo: getState().Auth.UserInfo['Photo'],
+          mFavourtiesID: null,
         });
 
         dispatch(
@@ -97,22 +109,28 @@ export const AddPost = Post => {
   };
 };
 
-export const AddtoMyFavo = mFavourties => {
+export const AddtoMyFavo = mFav => {
   return async (dispatch, getState) => {
     try {
-      let response = await Api.post(
-        'http://192.168.1.3:5000',
-        `/Favourites`,
-        mFavourties,
-      );
-
+      let response;
+      if (mFav.FavID !== null) {
+        response = await Api.delete(
+          'http://192.168.1.3:5000',
+          `/Favourites/${mFav.FavID}`,
+        ); //id fav
+      } else {
+        response = await Api.post('http://192.168.1.3:5000', `/Favourites`, {
+          idpost: mFav.idpost,
+          iduser: mFav.iduser,
+        });
+      }
       if (response) {
         var Index = getState().Blogs.AllBlogs.findIndex(
-          obj => obj.id == response.data['id_post'],
+          obj => obj.id == mFav.idpost,
         );
 
-        getState().Blogs.AllBlogs[Index].mFavourties = !getState().Blogs
-          .AllBlogs[Index].mFavourties;
+        getState().Blogs.AllBlogs[Index].mFavourtiesID =
+          mFav.FavID !== null ? null : response.data['id'];
 
         dispatch(
           setBlogs({
@@ -123,7 +141,7 @@ export const AddtoMyFavo = mFavourties => {
       }
     } catch (ex) {
       console.log('Ex', ex);
-      dispatch(setResponseAddPost(500));
+      // dispatch(setResponseAddPost(500));
     }
   };
 };
@@ -136,7 +154,6 @@ const setBlogs = userState => {
 };
 
 const setResponseBlogs = response => {
-  console.log('UPDATE', response);
   return {
     response: response,
     type: types.UPDATE_RESPONSE_BLOGS,

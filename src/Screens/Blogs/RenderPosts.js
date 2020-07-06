@@ -22,8 +22,9 @@ const Posts = props => {
 
     dispatch(
       BLogsActions.AddtoMyFavo({
-        id_post: props.Data.id,
-        id_user: mUser._id,
+        idpost: props.Data.id,
+        iduser: mUser._id,
+        FavID: props.Data.mFavourtiesID,
       }),
     );
   };
@@ -83,7 +84,7 @@ const Posts = props => {
           <Icons
             size={28}
             color={'red'}
-            name={props.Data.mFavourties ? 'heart' : 'heart-outline'}
+            name={props.Data.mFavourtiesID ? 'heart' : 'heart-outline'}
             style={{marginTop: 15}}
           />
         </TouchableOpacity>
