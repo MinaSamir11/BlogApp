@@ -9,7 +9,8 @@
       android:icon="@mipmap/mowe"
       android:roundIcon="@mipmap/mowe"
       android:allowBackup="false"
-      android:theme="@style/AppTheme">
+      android:theme="@style/AppTheme"
+     android:usesCleartextTraffic="true">
          <meta-data
           android:name="com.google.android.geo.API_KEY"
           android:value="AIzaSyCPLddm9M1e9PPMQ8gyF0NqBe6VBYQzhJ8"/>

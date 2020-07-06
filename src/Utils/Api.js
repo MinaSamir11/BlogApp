@@ -3,8 +3,8 @@ const axios = require('axios');
 class Api {
   static create() {
     return axios.create({
-      baseURL: 'http://my-json-server.typicode.com/',
-      timeout: 2000,
+      baseURL: 'http://192.168.1.3',
+      timeout: 30000,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',

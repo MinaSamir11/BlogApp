@@ -146,6 +146,7 @@ const AddPost = props => {
           }}
         />
       </View>
+
       <PopUp
         visible={PopupModel}
         message={MessagePopUp}

@@ -6,33 +6,26 @@ import Api from '../../Utils/Api';
 
 export const SignInAuth = Body => {
   return async dispatch => {
-    try {
-      let response = await Api.get(
-        `MinaSamir11/UserProfileAPi/data?Email=${Body.Email}&Password=${
-          Body.Password
-        }`,
-      );
-      if (response) {
-        if (response.data[0]) {
-          //if we get data then user found in our DB
-          dispatch(
-            setUserProfile({
-              ...response.data[0],
-              Status: response.status,
-            }),
-          );
-          //store data in Async Storage To prove of concept using Asyncstorage Package
-          storeData(response.data[0]);
-        } else {
-          dispatch(
-            setUserProfile({
-              Status: 401, //response.status in real response Api //wrong email or password
-            }),
-          );
-        }
+    let response = await Api.get(`:4000/Users`);
+    console.log(response);
+    if (response) {
+      if (response.data[0]) {
+        //if we get data then user found in our DB
+        dispatch(
+          setUserProfile({
+            ...response.data[0],
+            Status: response.status,
+          }),
+        );
+        //store data in Async Storage To prove of concept using Asyncstorage Package
+        storeData(response.data[0]);
+      } else {
+        dispatch(
+          setUserProfile({
+            Status: 401, //response.status in real response Api //wrong email or password
+          }),
+        );
       }
-    } catch (ex) {
-      dispatch(setUserProfile({Status: 50}));
     }
   };
 };
