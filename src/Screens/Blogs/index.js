@@ -135,3 +135,16 @@ const Blogs = props => {
 };
 
 export default Blogs;
+{
+  /* <View
+        style={{
+          flex: 1,
+          backgroundColor: '#fff',
+        }}>
+        <EmptyState
+          MessageTitle={'Empty Favourite Blogs'}
+          IconsName={'heart'}
+          titleStyle={{fontSize: 16, letterSpacing: 0.5}}
+        />
+      </View> */
+}

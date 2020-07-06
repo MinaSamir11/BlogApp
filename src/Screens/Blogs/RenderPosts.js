@@ -13,13 +13,7 @@ const Posts = props => {
 
   const mUser = useSelector(state => state.Auth.UserInfo);
 
-  // const [Name, setIcon] = useState(
-  //   Data.mFavourties ? 'heart' : 'heart-outline',
-  // );
-
   const OnChangeFavourties = () => {
-    // setIcon(n => (n === 'heart' ? 'heart-outline' : 'heart'));
-
     dispatch(
       BLogsActions.AddtoMyFavo({
         idpost: props.Data.id,

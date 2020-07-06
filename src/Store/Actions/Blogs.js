@@ -76,6 +76,42 @@ export const Get_AllUsersBlogs = () => {
   };
 };
 
+export const AddtoMyFavo = mFav => {
+  return async (dispatch, getState) => {
+    try {
+      let response;
+      if (mFav.FavID !== null) {
+        response = await Api.delete(
+          'http://192.168.1.3:5000',
+          `/Favourites/${mFav.FavID}`,
+        ); //id fav
+      } else {
+        response = await Api.post('http://192.168.1.3:5000', `/Favourites`, {
+          idpost: mFav.idpost,
+          iduser: mFav.iduser,
+        });
+      }
+      if (response) {
+        let temp = [...getState().Blogs.AllBlogs];
+        var Index = temp.findIndex(obj => obj.id == mFav.idpost);
+
+        temp[Index].mFavourtiesID =
+          mFav.FavID !== null ? null : response.data['id'];
+
+        dispatch(
+          setBlogs({
+            blogs: temp, //refresh state | screen
+            response: 200,
+          }),
+        );
+      }
+    } catch (ex) {
+      console.log('Ex', ex);
+      // dispatch(setResponseAddPost(500));
+    }
+  };
+};
+
 export const AddPost = Post => {
   return async (dispatch, getState) => {
     try {
@@ -105,43 +141,6 @@ export const AddPost = Post => {
     } catch (ex) {
       console.log('Ex', ex);
       dispatch(setResponseAddPost(500));
-    }
-  };
-};
-
-export const AddtoMyFavo = mFav => {
-  return async (dispatch, getState) => {
-    try {
-      let response;
-      if (mFav.FavID !== null) {
-        response = await Api.delete(
-          'http://192.168.1.3:5000',
-          `/Favourites/${mFav.FavID}`,
-        ); //id fav
-      } else {
-        response = await Api.post('http://192.168.1.3:5000', `/Favourites`, {
-          idpost: mFav.idpost,
-          iduser: mFav.iduser,
-        });
-      }
-      if (response) {
-        var Index = getState().Blogs.AllBlogs.findIndex(
-          obj => obj.id == mFav.idpost,
-        );
-
-        getState().Blogs.AllBlogs[Index].mFavourtiesID =
-          mFav.FavID !== null ? null : response.data['id'];
-
-        dispatch(
-          setBlogs({
-            blogs: getState().Blogs.AllBlogs, //refresh state | screen
-            response: 200,
-          }),
-        );
-      }
-    } catch (ex) {
-      console.log('Ex', ex);
-      // dispatch(setResponseAddPost(500));
     }
   };
 };

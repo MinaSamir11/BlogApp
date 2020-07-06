@@ -4,31 +4,40 @@ import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 import {Colors} from '../Assets';
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 const EmptyState = props => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Image
-          style={{...styles.imageEmpty, ...props.imageStyle}}
-          source={props.Image}
-        />
+        {props.Image && (
+          <Image
+            style={{...styles.imageEmpty, ...props.imageStyle}}
+            source={props.Image}
+          />
+        )}
+        {props.IconsName && (
+          <Icon color={'#CB4C5F'} name={props.IconsName} size={50} />
+        )}
         <Text style={{...styles.title, ...props.titleStyle}}>
           {props.MessageTitle}
         </Text>
         <Text style={{...styles.paragraph, ...props.paragraphStyle}}>
           {props.MessageParagraph}
         </Text>
-        <TouchableOpacity
-          onPress={props.OnReload}
-          style={{
-            width: '30%',
-            backgroundColor: Colors.MainColor,
-            padding: 15,
-            borderRadius: 10,
-            marginTop: 20,
-          }}>
-          <Text style={styles.paragraph}>{props.reload}</Text>
-        </TouchableOpacity>
+        {props.OnReload && (
+          <TouchableOpacity
+            onPress={props.OnReload}
+            style={{
+              width: '30%',
+              backgroundColor: Colors.MainColor,
+              padding: 15,
+              borderRadius: 10,
+              marginTop: 20,
+            }}>
+            <Text style={styles.paragraph}>{props.reload}</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

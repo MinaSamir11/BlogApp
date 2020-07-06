@@ -10,6 +10,8 @@ import Blogs from '../Screens/Blogs';
 
 import AddPost from '../Screens/AddPost';
 
+import Favorites from '../Screens/Favorites';
+
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -43,7 +45,7 @@ const BottomTabNavigator = () => {
         inactiveTintColor: Colors.GreyWhite,
       }}>
       <Tab.Screen name="Blogs" component={StackBlogs} />
-      <Tab.Screen name="Favourites" component={SignIn} />
+      <Tab.Screen name="Favourites" component={Favorites} />
       <Tab.Screen name="Profile" component={UserProfile} />
     </Tab.Navigator>
   );
