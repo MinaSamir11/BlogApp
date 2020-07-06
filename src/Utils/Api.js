@@ -1,9 +1,9 @@
 const axios = require('axios');
 
 class Api {
-  static create() {
+  static create(baseURL) {
     return axios.create({
-      baseURL: 'http://192.168.1.3',
+      baseURL: baseURL,
       timeout: 30000,
       headers: {
         Accept: 'application/json',
@@ -13,8 +13,8 @@ class Api {
     });
   }
 
-  static get(...args) {
-    let server = this.create();
+  static get(baseURL, ...args) {
+    let server = this.create(baseURL);
 
     return server.get(...args);
   }
@@ -25,8 +25,8 @@ class Api {
     return server.put(...args);
   }
 
-  static post(...args) {
-    let server = this.create();
+  static post(baseURL, ...args) {
+    let server = this.create(baseURL);
 
     return server.post(...args);
   }

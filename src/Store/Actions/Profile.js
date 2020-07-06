@@ -5,7 +5,12 @@ import Api from '../../Utils/Api';
 export const GetUserProfile = id => {
   return async dispatch => {
     try {
-      let response = await Api.get(`MinaSamir11/UserProfileAPi/data?_id=${id}`);
+      // let response = await Api.get(`MinaSamir11/UserProfileAPi/data?_id=${id}`);
+      let response = await Api.get(
+        'http://192.168.1.3:4000',
+        `/Users?_id=${id}`,
+      );
+
       if (response) {
         if (response.data[0]) {
           //if we get data then user found in our DB

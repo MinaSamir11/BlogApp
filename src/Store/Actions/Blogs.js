@@ -9,9 +9,13 @@ import * as RootNavigation from '../../Navigation/RootNavigation';
 export const Get_AllUsersBlogs = () => {
   return async dispatch => {
     try {
-      let UsersResponse = await Api.get(`MinaSamir11/UserProfileAPi/data`);
+      // let UsersResponse = await Api.get(`MinaSamir11/UserProfileAPi/data`);
 
-      let PostsResponse = await Api.get(`MinaSamir11/PostsApi/Posts`);
+      // let PostsResponse = await Api.get(`MinaSamir11/PostsApi/Posts`);
+
+      let UsersResponse = await Api.get('http://192.168.1.3:4000', `/Users`);
+
+      let PostsResponse = await Api.get('http://192.168.1.3:3000', `/Posts`);
 
       if (UsersResponse && PostsResponse) {
         let AllBlogs = [];
@@ -64,7 +68,9 @@ export const Get_AllUsersBlogs = () => {
 export const AddPost = Post => {
   return async (dispatch, getState) => {
     try {
-      let response = await Api.post(`MinaSamir11/PostsApi/Posts`, Post);
+      // let response = await Api.post(`MinaSamir11/PostsApi/Posts`, Post);
+      let response = await Api.post('http://192.168.1.3:3000', `/Posts`, Post);
+
       if (response) {
         let temp = [...getState().Blogs.AllBlogs];
 

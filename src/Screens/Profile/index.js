@@ -12,6 +12,8 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import * as ProfileActions from '../../Store/Actions/Profile';
 
+import {StackActions} from '@react-navigation/native';
+
 const UserProfile = props => {
   const dispatch = useDispatch();
 
@@ -41,6 +43,12 @@ const UserProfile = props => {
         IsLoadingModalVisible(false);
         setMessagePopUp('No internet Connection');
         setVisiabiltyPopUp(true);
+      } else if (UserProfile.Status == 401) {
+        IsLoadingModalVisible(false);
+        // setMessagePopUp('Your Profile not found');
+        // setVisiabiltyPopUp(true);
+        props.navigation.dispatch(StackActions.replace('TabBottomNavigator'));
+        //Profile not found  kick out of app
       }
     }
   }, [UserProfile]);

@@ -70,21 +70,13 @@ const AddPost = props => {
   const OnSubmit = () => {
     if (Title !== '' && Descp !== '') {
       IsLoadingModalVisible(true);
-      let current_date = new Date();
-
-      let formatted_date =
-        current_date.getFullYear() +
-        '-' +
-        (current_date.getMonth() + 1) +
-        '-' +
-        current_date.getDate();
-
+      var today = new Date().toISOString().slice(0, 10);
       dispatch(
         BLogsActions.AddPost({
           _id: UserInfo['_id'],
           Title: Title,
           Description: Descp,
-          Date: formatted_date.toString(),
+          Date: today,
         }),
       );
     } else {
