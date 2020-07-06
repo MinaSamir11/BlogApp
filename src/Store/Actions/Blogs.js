@@ -6,7 +6,6 @@ import * as RootNavigation from '../../Navigation/RootNavigation';
 
 export const Get_AllUsersBlogs = () => {
   return async dispatch => {
-    console.log('Called');
     try {
       // let UsersResponse = await Api.get(`MinaSamir11/UserProfileAPi/data`);
 
@@ -29,6 +28,8 @@ export const Get_AllUsersBlogs = () => {
           Blog.Name = user.Name;
 
           Blog.Photo = user.Photo;
+
+          Blog.mFavourties = false;
 
           const date1 = new Date(PostsResponse.data[i]['Date']);
           const date2 = new Date();
@@ -56,7 +57,6 @@ export const Get_AllUsersBlogs = () => {
             response: 200,
           }),
         );
-        console.log('Dispatch');
       }
     } catch (ex) {
       dispatch(setResponseBlogs(50));
@@ -89,6 +89,37 @@ export const AddPost = Post => {
           }),
         );
         RootNavigation.navigate('BlogsScreen');
+      }
+    } catch (ex) {
+      console.log('Ex', ex);
+      dispatch(setResponseAddPost(500));
+    }
+  };
+};
+
+export const AddtoMyFavo = mFavourties => {
+  return async (dispatch, getState) => {
+    try {
+      let response = await Api.post(
+        'http://192.168.1.3:5000',
+        `/Favourites`,
+        mFavourties,
+      );
+
+      if (response) {
+        var Index = getState().Blogs.AllBlogs.findIndex(
+          obj => obj.id == response.data['id_post'],
+        );
+
+        getState().Blogs.AllBlogs[Index].mFavourties = !getState().Blogs
+          .AllBlogs[Index].mFavourties;
+
+        dispatch(
+          setBlogs({
+            blogs: getState().Blogs.AllBlogs, //refresh state | screen
+            response: 200,
+          }),
+        );
       }
     } catch (ex) {
       console.log('Ex', ex);

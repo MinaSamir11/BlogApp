@@ -1,10 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
+import {useDispatch, useSelector} from 'react-redux';
+
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Posts = React.memo(({Data}) => {
+import * as BLogsActions from '../../Store/Actions/Blogs';
+
+const Posts = props => {
+  const dispatch = useDispatch();
+
+  const mUser = useSelector(state => state.Auth.UserInfo);
+
+  // const [Name, setIcon] = useState(
+  //   Data.mFavourties ? 'heart' : 'heart-outline',
+  // );
+
+  const OnChangeFavourties = () => {
+    // setIcon(n => (n === 'heart' ? 'heart-outline' : 'heart'));
+
+    dispatch(
+      BLogsActions.AddtoMyFavo({
+        id_post: props.Data.id,
+        id_user: mUser._id,
+      }),
+    );
+  };
+
   return (
     <View style={{marginTop: 12, marginStart: 12, marginEnd: 12}}>
       <View
@@ -19,7 +42,7 @@ const Posts = React.memo(({Data}) => {
             alignItems: 'center',
           }}>
           <Image
-            source={{uri: Data.Photo}}
+            source={{uri: props.Data.Photo}}
             style={{
               width: 43.3,
               height: 43.3,
@@ -29,11 +52,13 @@ const Posts = React.memo(({Data}) => {
               marginEnd: 15,
             }}
           />
-          <Text style={{fontSize: 15, fontWeight: 'bold'}}>{Data.Name}</Text>
+          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+            {props.Data.Name}
+          </Text>
         </View>
         <View style={{flex: 1}}>
           <Text style={{alignSelf: 'flex-end', fontWeight: '700'}}>
-            {Data.DaysLeftPost}
+            {props.Data.DaysLeftPost}
           </Text>
         </View>
       </View>
@@ -46,19 +71,19 @@ const Posts = React.memo(({Data}) => {
           borderRadius: 20,
         }}>
         <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10}}>
-          {Data.Title}
+          {props.Data.Title}
         </Text>
 
         <Text style={{fontSize: 16, fontWeight: '500', marginStart: 5}}>
-          {Data.Description}
+          {props.Data.Description}
         </Text>
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={OnChangeFavourties}
           style={{alignSelf: 'flex-end', justifyContent: 'flex-end'}}>
           <Icons
             size={28}
             color={'red'}
-            name={'heart-outline'}
+            name={props.Data.mFavourties ? 'heart' : 'heart-outline'}
             style={{marginTop: 15}}
           />
         </TouchableOpacity>
@@ -73,6 +98,5 @@ const Posts = React.memo(({Data}) => {
       />
     </View>
   );
-});
-
+};
 export default Posts;
