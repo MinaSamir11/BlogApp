@@ -38,7 +38,7 @@ const AddPost = props => {
   const setResponse = response => {
     return {
       response: response,
-      type: 'UPDATE_RESPONSE',
+      type: 'UPDATE_RESP_ADD_POST',
     };
   };
 

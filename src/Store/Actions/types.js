@@ -6,5 +6,8 @@ export const GET_SIGNINAUTH = 'GET_SIGNINAUTH';
 
 //Blogs
 export const GET_BLOGS = 'GET_BLOGS';
+
 //update Response Blog
-export const UPDATE_RESPONSE = 'UPDATE_RESPONSE';
+export const UPDATE_RESP_ADD_POST = 'UPDATE_RESP_ADD_POST';
+
+export const UPDATE_RESPONSE_BLOGS = 'UPDATE_RESPONSE_BLOGS';

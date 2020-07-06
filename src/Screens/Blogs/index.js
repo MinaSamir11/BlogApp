@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 
-import {View, ScrollView} from 'react-native';
+import {View, ScrollView, RefreshControl} from 'react-native';
 
 import Styles from './styles';
 
@@ -29,6 +29,8 @@ const Blogs = props => {
 
   let [MessagePopUp, setMessagePopUp] = useState('');
 
+  const [refreshing, setRefreshing] = React.useState(false);
+
   const initFetch = useCallback(() => {
     dispatch(BLogsActions.Get_AllUsersBlogs());
   }, [dispatch]);
@@ -37,10 +39,10 @@ const Blogs = props => {
     initFetch();
   }, [initFetch]);
 
-  const setBlogs = userState => {
+  const setResponseBlogs = response => {
     return {
-      userData: userState,
-      type: 'GET_BLOGS',
+      response: response,
+      type: 'UPDATE_RESPONSE_BLOGS',
     };
   };
 
@@ -48,10 +50,13 @@ const Blogs = props => {
     if (StatusBlogResponse != null) {
       if (StatusBlogResponse == 200) {
         IsLoadingModalVisible(false);
+        dispatch(setResponseBlogs(0));
+        setRefreshing(false);
       } else if (StatusBlogResponse == 50) {
         IsLoadingModalVisible(false);
+        setRefreshing(false);
         setMessagePopUp('No internet Connection');
-        dispatch(setBlogs({blogs: [], response: null}));
+        dispatch(setResponseBlogs(null));
         setVisiabiltyPopUp(true);
       }
     }
@@ -65,6 +70,12 @@ const Blogs = props => {
     IsLoadingModalVisible(true);
     initFetch();
   };
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    dispatch(BLogsActions.Get_AllUsersBlogs());
+  }, [refreshing]);
+
   return (
     <View style={Styles.MainContainer}>
       <View>
@@ -80,18 +91,23 @@ const Blogs = props => {
         />
       </View>
 
-      {!LoadingModalVisible && StatusBlogResponse != 200 && (
-        <View style={{flex: 1, backgroundColor: '#fff'}}>
-          <EmptyState
-            MessageTitle={MessagePopUp}
-            Image={Icons.WrongPopUp}
-            reload={'Retry'}
-            OnReload={OnReload}
-          />
-        </View>
-      )}
+      {!LoadingModalVisible &&
+        StatusBlogResponse === null &&
+        Blogs.length == 0 && (
+          <View style={{flex: 1, backgroundColor: '#fff'}}>
+            <EmptyState
+              MessageTitle={MessagePopUp}
+              Image={Icons.WrongPopUp}
+              reload={'Retry'}
+              OnReload={OnReload}
+            />
+          </View>
+        )}
 
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         {Blogs.map((item, index) => {
           return <Posts key={index} Data={item} />;
         })}

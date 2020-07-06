@@ -2,12 +2,11 @@ import * as types from './types';
 
 import Api from '../../Utils/Api';
 
-import configureStore from '../configureStore';
-
 import * as RootNavigation from '../../Navigation/RootNavigation';
 
 export const Get_AllUsersBlogs = () => {
   return async dispatch => {
+    console.log('Called');
     try {
       // let UsersResponse = await Api.get(`MinaSamir11/UserProfileAPi/data`);
 
@@ -57,10 +56,11 @@ export const Get_AllUsersBlogs = () => {
             response: 200,
           }),
         );
+        console.log('Dispatch');
       }
     } catch (ex) {
+      dispatch(setResponseBlogs(50));
       console.log('Ex', ex);
-      dispatch(setBlogs({blogs: [], response: 50}));
     }
   };
 };
@@ -71,6 +71,7 @@ export const AddPost = Post => {
       // let response = await Api.post(`MinaSamir11/PostsApi/Posts`, Post);
       let response = await Api.post('http://192.168.1.3:3000', `/Posts`, Post);
 
+      // we can make anthor request to GET all posts (Refresh our array of posts) even any one else add post
       if (response) {
         let temp = [...getState().Blogs.AllBlogs];
 
@@ -91,7 +92,7 @@ export const AddPost = Post => {
       }
     } catch (ex) {
       console.log('Ex', ex);
-      dispatch(setResponse(500));
+      dispatch(setResponseAddPost(500));
     }
   };
 };
@@ -103,9 +104,17 @@ const setBlogs = userState => {
   };
 };
 
-const setResponse = response => {
+const setResponseBlogs = response => {
+  console.log('UPDATE', response);
   return {
     response: response,
-    type: types.UPDATE_RESPONSE,
+    type: types.UPDATE_RESPONSE_BLOGS,
+  };
+};
+
+const setResponseAddPost = response => {
+  return {
+    response: response,
+    type: types.UPDATE_RESP_ADD_POST,
   };
 };

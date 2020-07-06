@@ -17,6 +17,12 @@ export default function(state = initialState.Blogs, action) {
         StatusAddPostResponse: action.response,
       };
     }
+    case types.UPDATE_RESPONSE_BLOGS: {
+      return {
+        ...state,
+        StatusBlogResponse: action.response,
+      };
+    }
     default:
       return {
         ...state,
