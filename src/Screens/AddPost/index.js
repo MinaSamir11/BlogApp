@@ -72,28 +72,25 @@ const AddPost = props => {
       IsLoadingModalVisible(true);
       var today = new Date().toISOString().slice(0, 10);
 
+      let Region;
+      if (props.route.params == undefined) {
+        Region = {
+          latitude: null,
+          longitude: null,
+          latitudeDelta: null,
+          longitudeDelta: null,
+        };
+      }
       dispatch(
         BLogsActions.AddPost({
           _id: UserInfo['_id'],
           Title: Title,
           Description: Descp,
           Date: today,
-          latitude:
+          Region:
             props.route.params == undefined
-              ? null
-              : props.route.params.Region.latitude,
-          longitude:
-            props.route.params == undefined
-              ? null
-              : props.route.params.Region.longitude,
-          latitudeDelta:
-            props.route.params == undefined
-              ? null
-              : props.route.params.Region.latitudeDelta,
-          longitudeDelta:
-            props.route.params == undefined
-              ? null
-              : props.route.params.Region.longitudeDelta,
+              ? Region
+              : props.route.params.Region,
         }),
       );
     } else {
@@ -102,7 +99,7 @@ const AddPost = props => {
     }
   };
 
-  const OnMap = () => props.navigation.navigate('Map');
+  const OnMap = () => props.navigation.push('Map');
 
   return (
     <View style={Styles.MainContainer}>

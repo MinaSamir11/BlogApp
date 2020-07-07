@@ -8,6 +8,8 @@ import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import * as BLogsActions from '../../Store/Actions/Blogs';
 
+import * as RootNavigation from '../../Navigation/RootNavigation';
+
 const Posts = props => {
   const dispatch = useDispatch();
 
@@ -23,6 +25,12 @@ const Posts = props => {
     );
   };
 
+  const OnShowLocation = () => {
+    RootNavigation.navigate('Map', {
+      Region: props.Data.Region,
+      Title: props.Data.Title,
+    });
+  };
   return (
     <View style={{marginTop: 12, marginStart: 12, marginEnd: 12}}>
       <View
@@ -65,23 +73,41 @@ const Posts = props => {
           marginTop: 8,
           borderRadius: 20,
         }}>
-        <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10}}>
-          {props.Data.Title}
-        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+            {props.Data.Title}
+          </Text>
+          {props.Data.Region.latitude && (
+            <TouchableOpacity onPress={OnShowLocation} style={{}}>
+              <Icons
+                size={28}
+                color={'#2A3575'}
+                name={'google-maps'}
+                style={{marginBottom: 10}}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
 
-        <Text style={{fontSize: 16, fontWeight: '500', marginStart: 5}}>
-          {props.Data.Description}
-        </Text>
-        <TouchableOpacity
-          onPress={OnChangeFavourties}
-          style={{alignSelf: 'flex-end', justifyContent: 'flex-end'}}>
-          <Icons
-            size={28}
-            color={'red'}
-            name={props.Data.mFavourtiesID ? 'heart' : 'heart-outline'}
-            style={{marginTop: 15}}
-          />
-        </TouchableOpacity>
+        <View>
+          <Text style={{fontSize: 16, fontWeight: '500', marginStart: 5}}>
+            {props.Data.Description}
+          </Text>
+          <TouchableOpacity
+            onPress={OnChangeFavourties}
+            style={{alignSelf: 'flex-end', justifyContent: 'flex-end'}}>
+            <Icons
+              size={28}
+              color={'red'}
+              name={props.Data.mFavourtiesID ? 'heart' : 'heart-outline'}
+              style={{marginTop: 15}}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View
