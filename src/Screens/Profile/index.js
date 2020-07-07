@@ -119,11 +119,37 @@ const UserProfile = props => {
       });
     } else {
       if (
-        formState.UserProfile.Name != '' ||
-        formState.UserProfile.Phone != '' ||
-        formState.UserProfile.Email != '' ||
-        formState.UserProfile.Age != ''
+        formState.UserProfile.Name !== '' ||
+        formState.UserProfile.Phone !== '' ||
+        formState.UserProfile.Email !== '' ||
+        formState.UserProfile.Age !== ''
       ) {
+        dispatch(
+          ProfileActions.UpdateUserProfile({
+            id: UserInfo.id,
+            data: {
+              _id: UserInfo._id,
+              Name:
+                formState.UserProfile.Name !== ''
+                  ? formState.UserProfile.Name
+                  : UserInfo.Name,
+              Phone:
+                formState.UserProfile.Phone !== ''
+                  ? formState.UserProfile.Phone
+                  : UserInfo.Phone,
+              Email:
+                formState.UserProfile.Email !== ''
+                  ? formState.UserProfile.Email.trim().toLowerCase()
+                  : UserInfo.Email,
+              Password: UserInfo.Password,
+              Age:
+                formState.UserProfile.Age !== ''
+                  ? parseInt(formState.UserProfile.Age)
+                  : UserInfo.Age,
+              Photo: 'https://source.unsplash.com/1024x768/?nature', //we can't take his pic because there is no backend to upload image
+            },
+          }),
+        );
       }
       ChangeState({
         value: 'pencil',
