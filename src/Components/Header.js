@@ -68,6 +68,11 @@ const Header = props => (
               size={22}
             />
           )}
+          {props.RightTitle && (
+            <Text style={[styles.Title, props.titleStyle]}>
+              {props.RightTitle}
+            </Text>
+          )}
         </TouchableOpacity>
       </View>
     </View>

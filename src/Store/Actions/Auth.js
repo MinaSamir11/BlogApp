@@ -6,12 +6,11 @@ import Api from '../../Utils/Api';
 
 export const SignInAuth = Account => {
   return async dispatch => {
-    let response = await Api.get(
-      'http://192.168.1.3:4000',
-      `/Users?Email=${Account.Email}&Password=${Account.Password}`,
-    );
-    console.log(response);
     try {
+      let response = await Api.get(
+        'http://192.168.1.3:4000',
+        `/Users?Email=${Account.Email}&Password=${Account.Password}`,
+      );
       if (response) {
         if (response.data[0]) {
           //if we get data then user found in our DB

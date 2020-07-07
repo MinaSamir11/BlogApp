@@ -8,7 +8,9 @@ import {
   Platform,
 } from 'react-native';
 
-import {Colors} from '../Assets';
+import {Colors, Icons} from '../Assets';
+
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Button = React.memo(
   ({
@@ -16,9 +18,11 @@ const Button = React.memo(
     onPress,
     Customstyle,
     activeOpacity,
-    IconLeft,
+    IconLeftName,
     title,
     BtnTitleStyle,
+    IconSize,
+    IconColor,
   }) => {
     return (
       <TouchableOpacity
@@ -26,18 +30,12 @@ const Button = React.memo(
         onPress={onPress}
         style={[styles.buttonStyle, Customstyle]}
         activeOpacity={activeOpacity ? activeOpacity : 0.3}>
-        {IconLeft && (
-          <Image
-            source={IconLeft}
-            style={{
-              width: 17,
-              height: 17,
-              marginStart: '11%',
-              resizeMode: 'contain',
-            }}
-          />
+        {IconLeftName && (
+          <Icon color={IconColor} size={IconSize} name={IconLeftName} />
         )}
-        <Text style={[styles.buttonTextStyle, BtnTitleStyle]}>{title}</Text>
+        {title && (
+          <Text style={[styles.buttonTextStyle, BtnTitleStyle]}>{title}</Text>
+        )}
       </TouchableOpacity>
     );
   },

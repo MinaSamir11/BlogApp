@@ -38,7 +38,7 @@ const AddPost = props => {
   const setResponse = response => {
     return {
       response: response,
-      type: 'UPDATE_RESP_ADD_POST',
+      type: 'UPDATE_RESPONSE',
     };
   };
 
@@ -71,12 +71,29 @@ const AddPost = props => {
     if (Title !== '' && Descp !== '') {
       IsLoadingModalVisible(true);
       var today = new Date().toISOString().slice(0, 10);
+
       dispatch(
         BLogsActions.AddPost({
           _id: UserInfo['_id'],
           Title: Title,
           Description: Descp,
           Date: today,
+          latitude:
+            props.route.params == undefined
+              ? null
+              : props.route.params.Region.latitude,
+          longitude:
+            props.route.params == undefined
+              ? null
+              : props.route.params.Region.longitude,
+          latitudeDelta:
+            props.route.params == undefined
+              ? null
+              : props.route.params.Region.latitudeDelta,
+          longitudeDelta:
+            props.route.params == undefined
+              ? null
+              : props.route.params.Region.longitudeDelta,
         }),
       );
     } else {
@@ -84,6 +101,8 @@ const AddPost = props => {
       setVisiabiltyPopUp(true);
     }
   };
+
+  const OnMap = () => props.navigation.navigate('Map');
 
   return (
     <View style={Styles.MainContainer}>
@@ -122,12 +141,21 @@ const AddPost = props => {
       />
 
       <Button
-        title={Submit}
-        Customstyle={{borderRadius: 25, marginTop: 50}}
+        title={'Map'}
+        Customstyle={Styles.MapBtn}
+        onPress={OnMap}
+        IconLeftName={'map-marker-radius-outline'}
+        IconSize={50}
+        IconColor={'#FFF'}
+      />
+
+      <Button
+        title={'Submit'}
+        Customstyle={{borderRadius: 25, marginTop: 25}}
         onPress={OnSubmit}
       />
 
-      <View style={{flex: 1}}>
+      {/* <View style={{flex: 1}}>
         <MapView
           style={{flex: 1}}
           region={{
@@ -137,7 +165,7 @@ const AddPost = props => {
             longitudeDelta: 0.0121,
           }}
         />
-      </View>
+      </View> */}
 
       <PopUp
         visible={PopupModel}

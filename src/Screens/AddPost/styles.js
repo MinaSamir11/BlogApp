@@ -24,6 +24,14 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     maxHeight: 150,
   },
+  MapBtn: {
+    borderRadius: 25,
+    marginTop: 30,
+    marginStart: '16%',
+    alignSelf: 'flex-start',
+    width: 100,
+    height: 100,
+  },
 });
 
 export default styles;

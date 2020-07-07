@@ -10,6 +10,8 @@ import Blogs from '../Screens/Blogs';
 
 import AddPost from '../Screens/AddPost';
 
+import Map from '../Screens/Map';
+
 import Favorites from '../Screens/Favorites';
 
 import {createStackNavigator} from '@react-navigation/stack';
@@ -56,6 +58,7 @@ const StackBlogs = () => {
     <Stack.Navigator headerMode="none">
       <Stack.Screen name="BlogsScreen" component={Blogs} />
       <Stack.Screen name="AddPost" component={AddPost} />
+      <Stack.Screen name="Map" component={Map} />
     </Stack.Navigator>
   );
 };
