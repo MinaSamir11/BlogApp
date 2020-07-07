@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-
+  ContainerHeader: {zIndex: 5, overflow: 'visible'},
   ProfilePic: {
     width: 132.3,
     height: 132.3,
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     letterSpacing: 1,
   },
+  ScrollStyle: {width: '100%', height: '100%'},
   // KeyboardAvoidingView: {flex: 1},
 });
 

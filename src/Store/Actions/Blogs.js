@@ -17,7 +17,7 @@ export const Get_AllUsersBlogs = () => {
 
       let FavouriteResponse = await Api.get(
         'http://192.168.1.3:5000',
-        `/Favourites?iduser=${getState().Auth.UserInfo['_id']}`,
+        `/Favourites?iduser=${getState().Auth.UserInfo['id']}`,
       );
 
       if (UsersResponse && PostsResponse && FavouriteResponse) {
@@ -28,12 +28,17 @@ export const Get_AllUsersBlogs = () => {
 
           // get user who is the Owner of post
           let user = UsersResponse.data.find(User => {
-            return User._id === PostsResponse.data[i]['_id'];
+            return User.id === PostsResponse.data[i]['_id'];
           });
-
+          console.log(
+            'USerSSSSS',
+            user,
+            'POST ID',
+            PostsResponse.data[i]['_id'],
+          );
           //check if post is in favourite list or not
           let IsPostInFavourite = FavouriteResponse.data.find(FavoutirePost => {
-            return FavoutirePost.idpost == PostsResponse.data[i]['id'];
+            return FavoutirePost.idpost == PostsResponse.data[i]['_id'];
           });
 
           Blog.Name = user.Name;

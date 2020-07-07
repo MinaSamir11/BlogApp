@@ -94,7 +94,7 @@ const Blogs = props => {
       {!LoadingModalVisible &&
         StatusBlogResponse === null &&
         Blogs.length == 0 && (
-          <View style={{flex: 1, backgroundColor: '#fff'}}>
+          <View style={Styles.MainContainer}>
             <EmptyState
               MessageTitle={MessagePopUp}
               Image={Icons.WrongPopUp}
@@ -118,7 +118,7 @@ const Blogs = props => {
         style={{flex: 1, marginTop: 20}}
         data={Blogs}
         renderItem={({item, index}) => <Posts key={index} Data={item} />}
-        keyExtractor={item => item._id}
+        keyExtractor={item => item.id}
       /> */}
 
       <PopUp

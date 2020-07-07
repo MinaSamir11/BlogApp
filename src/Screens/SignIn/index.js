@@ -158,10 +158,7 @@ const SignIn = props => {
 
   return (
     <View style={Styles.MainContainer}>
-      <Image
-        source={Images.Logo}
-        style={{width: 150, height: 150, alignSelf: 'center', marginTop: 50}}
-      />
+      <Image source={Images.Logo} style={Styles.Logo} />
       <Input
         Error={formState.Account.ErrorEmail}
         PlaceHolder={'Email'}
@@ -179,11 +176,7 @@ const SignIn = props => {
         InputStyle={{marginTop: 30}}
       />
 
-      <Button
-        title={'Login'}
-        Customstyle={{borderRadius: 25, marginTop: 30}}
-        onPress={OnLogin}
-      />
+      <Button title={'Login'} Customstyle={Styles.LoginBtn} onPress={OnLogin} />
       <PopUp
         visible={PopupModel}
         message={MessagePopUp}

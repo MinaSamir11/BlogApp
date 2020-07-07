@@ -81,7 +81,7 @@ const AddPost = props => {
       }
       dispatch(
         BLogsActions.AddPost({
-          _id: UserInfo['_id'],
+          _id: UserInfo['id'],
           Title: Title,
           Description: Descp,
           Date: today,

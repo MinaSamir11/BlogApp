@@ -19,7 +19,7 @@ const Posts = props => {
     dispatch(
       BLogsActions.AddtoMyFavo({
         idpost: props.Data.id,
-        iduser: mUser._id,
+        iduser: mUser.id,
         FavID: props.Data.mFavourtiesID,
       }),
     );

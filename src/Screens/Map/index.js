@@ -41,62 +41,60 @@ const Map = props => {
 
   return (
     <View style={Styles.MainContainer}>
-      <View style={{flex: 1}}>
-        <Header
-          BackButton
-          StatusBarColor
-          Title={
-            props.route.params == undefined
-              ? 'Set Post Location'
-              : 'Post Location'
-          }
-          onPressLeft={() => {
-            props.route.params == undefined
-              ? props.navigation.navigate('AddPost')
-              : props.navigation.navigate('BlogsScreen');
-          }}
-          titleStyle={{color: '#354294', fontSize: 16}}
-          IconColor={'#354294'}
-          ContainerTitle={{
-            flex: 1,
-            marginLeft: 0,
-          }}
-          RightTitle={props.route.params == undefined ? 'Save' : null}
-          onPressRight={() => {
-            props.navigation.navigate('AddPost', {
-              Region: {
-                latitude: Region.latitude,
-                longitude: Region.longitude,
-              },
-            });
-          }}
-        />
+      <Header
+        BackButton
+        StatusBarColor
+        Title={
+          props.route.params == undefined
+            ? 'Set Post Location'
+            : 'Post Location'
+        }
+        onPressLeft={() => {
+          props.route.params == undefined
+            ? props.navigation.navigate('AddPost')
+            : props.navigation.navigate('BlogsScreen');
+        }}
+        titleStyle={{color: '#354294', fontSize: 16}}
+        IconColor={'#354294'}
+        ContainerTitle={{
+          flex: 1,
+          marginLeft: 0,
+        }}
+        RightTitle={props.route.params == undefined ? 'Save' : null}
+        onPressRight={() => {
+          props.navigation.navigate('AddPost', {
+            Region: {
+              latitude: Region.latitude,
+              longitude: Region.longitude,
+            },
+          });
+        }}
+      />
 
-        <MapView
-          region={Region}
-          onPress={e => _handleChangeRegion({Region: e.nativeEvent.coordinate})}
-          onRegionChangeComplete={e => _handleChangeRegion({Region: e})}
-          showsUserLocation={true}
-          showsMyLocationButton={true}
-          style={{flex: 1}}
-          initialRegion={Region}>
-          <Marker
-            draggable={props.route.params == undefined ? true : false}
-            coordinate={Region}
-            title={
-              props.route.params == undefined
-                ? 'set your post location'
-                : props.route.params.Title
-            }
-            description={
-              props.route.params == undefined ? 'Hold and drag me' : ''
-            }
-            onDragEnd={e =>
-              _handleChangeRegion({Region: e.nativeEvent.coordinate})
-            }
-          />
-        </MapView>
-      </View>
+      <MapView
+        region={Region}
+        onPress={e => _handleChangeRegion({Region: e.nativeEvent.coordinate})}
+        onRegionChangeComplete={e => _handleChangeRegion({Region: e})}
+        showsUserLocation={true}
+        showsMyLocationButton={true}
+        style={{flex: 1}}
+        initialRegion={Region}>
+        <Marker
+          draggable={props.route.params == undefined ? true : false}
+          coordinate={Region}
+          title={
+            props.route.params == undefined
+              ? 'set your post location'
+              : props.route.params.Title
+          }
+          description={
+            props.route.params == undefined ? 'Hold and drag me' : ''
+          }
+          onDragEnd={e =>
+            _handleChangeRegion({Region: e.nativeEvent.coordinate})
+          }
+        />
+      </MapView>
     </View>
   );
 };
