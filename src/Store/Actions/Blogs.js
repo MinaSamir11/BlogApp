@@ -26,10 +26,12 @@ export const Get_AllUsersBlogs = () => {
         for (var i = 0; i < PostsResponse.data.length; i++) {
           let Blog = PostsResponse.data[i];
 
+          // get user who is the Owner of post
           let user = UsersResponse.data.find(User => {
             return User._id === PostsResponse.data[i]['_id'];
           });
 
+          //check if post is in favourite list or not
           let IsPostInFavourite = FavouriteResponse.data.find(FavoutirePost => {
             return FavoutirePost.idpost == PostsResponse.data[i]['id'];
           });
@@ -38,9 +40,12 @@ export const Get_AllUsersBlogs = () => {
 
           Blog.Photo = user.Photo;
 
-          Blog.mFavourtiesID = IsPostInFavourite
-            ? IsPostInFavourite['id']
-            : null;
+          if (IsPostInFavourite == undefined) {
+            Blog.mFavourtiesID = null;
+          } else {
+            Blog.mFavourtiesID = IsPostInFavourite['id'];
+            getState().Blogs.EmptyFavouriteBlog++;
+          }
 
           const date1 = new Date(PostsResponse.data[i]['Date']);
           const date2 = new Date();
@@ -81,11 +86,13 @@ export const AddtoMyFavo = mFav => {
     try {
       let response;
       if (mFav.FavID !== null) {
+        getState().Blogs.EmptyFavouriteBlog--;
         response = await Api.delete(
           'http://192.168.1.3:5000',
           `/Favourites/${mFav.FavID}`,
         ); //id fav
       } else {
+        getState().Blogs.EmptyFavouriteBlog++;
         response = await Api.post('http://192.168.1.3:5000', `/Favourites`, {
           idpost: mFav.idpost,
           iduser: mFav.iduser,
@@ -93,8 +100,10 @@ export const AddtoMyFavo = mFav => {
       }
       if (response) {
         let temp = [...getState().Blogs.AllBlogs];
+        //need Index of post that user want to Add Or Remove to/from Fav
         var Index = temp.findIndex(obj => obj.id == mFav.idpost);
 
+        // if Post Take FavID then this post is removed let it = null if FavID is Null then this post became in Fav List put to it new FavID
         temp[Index].mFavourtiesID =
           mFav.FavID !== null ? null : response.data['id'];
 

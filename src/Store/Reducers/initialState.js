@@ -9,5 +9,6 @@ export default {
     StatusBlogResponse: null,
     StatusAddPostResponse: null,
     AllBlogs: [],
+    EmptyFavouriteBlog: 0,
   },
 };
