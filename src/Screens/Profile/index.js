@@ -230,6 +230,7 @@ const UserProfile = props => {
       });
     }
   };
+
   const RenderInput = (key, index) => {
     if (key === 'Name' || key === 'Age' || key === 'Phone' || key === 'Email')
       return (

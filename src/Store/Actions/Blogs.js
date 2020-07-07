@@ -30,15 +30,10 @@ export const Get_AllUsersBlogs = () => {
           let user = UsersResponse.data.find(User => {
             return User.id === PostsResponse.data[i]['_id'];
           });
-          console.log(
-            'USerSSSSS',
-            user,
-            'POST ID',
-            PostsResponse.data[i]['_id'],
-          );
+
           //check if post is in favourite list or not
           let IsPostInFavourite = FavouriteResponse.data.find(FavoutirePost => {
-            return FavoutirePost.idpost == PostsResponse.data[i]['_id'];
+            return FavoutirePost.idpost == PostsResponse.data[i]['id'];
           });
 
           Blog.Name = user.Name;
