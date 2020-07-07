@@ -8,7 +8,10 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  TouchableOpacity,
 } from 'react-native';
+
+import ImagePicker from 'react-native-image-picker';
 
 import Styles from './styles';
 
@@ -22,9 +25,17 @@ import * as ProfileActions from '../../Store/Actions/Profile';
 
 import {StackActions} from '@react-navigation/native';
 
-import {validateEmail, validatePassword} from '../../Utils/stringUtils';
+import {validateEmail} from '../../Utils/stringUtils';
 
 let keyboardVerticalOffset = Platform.OS === 'ios' ? 100 : -200;
+
+const options = {
+  title: 'Select Profile Picture',
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+};
 
 const UserProfile = props => {
   const dispatch = useDispatch();
@@ -38,6 +49,10 @@ const UserProfile = props => {
   let [PopupModel, setVisiabiltyPopUp] = useState(false);
 
   let [MessagePopUp, setMessagePopUp] = useState('');
+
+  let [ProfileImage, setProfileImage] = useState(
+    UserProfile ? UserProfile.Photo : null,
+  );
 
   const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
@@ -86,6 +101,9 @@ const UserProfile = props => {
     if (UserProfile != null) {
       if (UserProfile.Status == 200) {
         IsLoadingModalVisible(false);
+        setProfileImage(
+          UserProfile.Photo !== null ? UserProfile.Photo : Images.Logo,
+        );
       } else if (UserProfile.Status == 50) {
         IsLoadingModalVisible(false);
         setMessagePopUp('No internet Connection');
@@ -195,6 +213,23 @@ const UserProfile = props => {
     });
   };
 
+  const PickerImage = async () => {
+    if (formState.UserProfile.Editable) {
+      ImagePicker.showImagePicker(options, async response => {
+        console.log('Response = ', response);
+
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        } else {
+          setProfileImage(response.uri);
+        }
+      });
+    }
+  };
   const RenderInput = (key, index) => {
     if (key === 'Name' || key === 'Age' || key === 'Phone' || key === 'Email')
       return (
@@ -232,13 +267,16 @@ const UserProfile = props => {
                 enabled
                 keyboardVerticalOffset={keyboardVerticalOffset}>
                 <ScrollView style={Styles.ScrollStyle}>
-                  <Image
-                    source={
-                      UserProfile ? {uri: UserProfile.Photo} : Images.Logo
-                    }
-                    style={Styles.ProfilePic}
-                  />
-
+                  <TouchableOpacity
+                    onPress={PickerImage}
+                    activeOpacity={formState.UserProfile.Editable ? 0.2 : 1}>
+                    <Image
+                      source={
+                        ProfileImage != null ? {uri: ProfileImage} : Images.Logo
+                      }
+                      style={Styles.ProfilePic}
+                    />
+                  </TouchableOpacity>
                   {Object.keys(UserProfile).map((key, index) => {
                     return RenderInput(key, index);
                   })}

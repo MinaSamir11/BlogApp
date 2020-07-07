@@ -12,8 +12,6 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import * as BLogsActions from '../../Store/Actions/Blogs';
 
-import MapView from 'react-native-maps';
-
 const AddPost = props => {
   const dispatch = useDispatch();
 
@@ -145,7 +143,7 @@ const AddPost = props => {
       />
 
       <Button
-        title={'Submit'}
+        title={Submit}
         Customstyle={{borderRadius: 25, marginTop: 25}}
         onPress={OnSubmit}
       />
