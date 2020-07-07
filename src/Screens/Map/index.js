@@ -1,33 +1,35 @@
 import React, {useState} from 'react';
 
-import {View, Dimensions, Text} from 'react-native';
+import {View} from 'react-native';
 
 import Styles from './styles';
 
-import {Header, Input, LoadingModal, PopUp, Button} from '../../Components';
+import {Header} from '../../Components';
 
 import MapView, {Marker} from 'react-native-maps';
 
-const {width, height} = Dimensions.get('screen');
-
-const latitudeDelta = 0.7,
-  longitudeDelta = (width / height) * 4;
+const latitudeDelta = 4.458373652515075,
+  longitudeDelta = 3.0254107341170347;
 
 const Map = props => {
-  // console.log('RE', props.route.params.Region);
   let [Region, setRegion] = useState(
     props.route.params == undefined
       ? {
-          latitude: 30.1357675,
-          longitude: 31.2999,
-          latitudeDelta,
-          longitudeDelta,
+          latitude: 30.07970940404224,
+          longitude: 31.292318869382143,
+          latitudeDelta: latitudeDelta,
+          longitudeDelta: longitudeDelta,
         }
-      : props.route.params.Region,
+      : {
+          ...props.route.params.Region,
+          latitudeDelta: 0.009999045840163,
+          longitudeDelta: 0.00666227191686635,
+        },
   );
 
   const _handleChangeRegion = data => {
     if (props.route.params == undefined) {
+      console.log(data);
       setRegion(prevState => {
         return {
           ...prevState,
@@ -62,7 +64,10 @@ const Map = props => {
           RightTitle={props.route.params == undefined ? 'Save' : null}
           onPressRight={() => {
             props.navigation.navigate('AddPost', {
-              Region,
+              Region: {
+                latitude: Region.latitude,
+                longitude: Region.longitude,
+              },
             });
           }}
         />
@@ -92,14 +97,6 @@ const Map = props => {
           />
         </MapView>
       </View>
-
-      {/* <PopUp
-        visible={PopupModel}
-        message={MessagePopUp}
-        LeftBtnName={'Ok'}
-        topIcon={Icons.WrongPopUp}
-        LeftBtnFunction={PopupactionFunLeft}
-      /> */}
     </View>
   );
 };

@@ -77,8 +77,6 @@ const AddPost = props => {
         Region = {
           latitude: null,
           longitude: null,
-          latitudeDelta: null,
-          longitudeDelta: null,
         };
       }
       dispatch(
