@@ -31,6 +31,7 @@ const Posts = props => {
       Title: props.Data.Title,
     });
   };
+
   return (
     <View style={{marginTop: 12, marginStart: 12, marginEnd: 12}}>
       <View

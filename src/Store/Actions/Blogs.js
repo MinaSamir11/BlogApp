@@ -93,6 +93,7 @@ export const AddtoMyFavo = mFav => {
         ); //id fav
       } else {
         getState().Blogs.EmptyFavouriteBlog++;
+
         response = await Api.post('http://192.168.1.3:5000', `/Favourites`, {
           idpost: mFav.idpost,
           iduser: mFav.iduser,

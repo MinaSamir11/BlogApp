@@ -11,13 +11,14 @@ const Input = React.memo(
     InputStyle,
     secureTextEntry,
     Error,
+    KEY,
     ErrorTitle,
     multiline,
   }) => {
     const [Value, OnTextChange] = useState('');
 
     const textChangeHandler = text => {
-      onChangeText(text);
+      onChangeText(text, KEY);
       OnTextChange(text);
     };
 

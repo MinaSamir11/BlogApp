@@ -19,8 +19,8 @@ class Api {
     return server.get(...args);
   }
 
-  static put(...args) {
-    let server = this.create();
+  static put(baseURL, ...args) {
+    let server = this.create(baseURL);
 
     return server.put(...args);
   }

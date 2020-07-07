@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     letterSpacing: 1,
   },
+  // KeyboardAvoidingView: {flex: 1},
 });
 
 export default styles;

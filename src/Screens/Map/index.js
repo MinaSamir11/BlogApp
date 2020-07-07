@@ -8,7 +8,7 @@ import {Header} from '../../Components';
 
 import MapView, {Marker} from 'react-native-maps';
 
-const latitudeDelta = 4.458373652515075,
+const latitudeDelta = 4.458373652515075, //default zoom
   longitudeDelta = 3.0254107341170347;
 
 const Map = props => {

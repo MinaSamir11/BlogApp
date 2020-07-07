@@ -90,9 +90,9 @@ const SignIn = props => {
   };
 
   const OnChangeEmail = text => {
-    if (validateEmail(text)) {
+    if (validateEmail(text.trim())) {
       ChangeState({
-        value: text,
+        value: text.trim(),
         input: 'Email',
       });
       ChangeState({
@@ -119,7 +119,7 @@ const SignIn = props => {
       });
     }
     ChangeState({
-      value: text,
+      value: text.trim(),
       input: 'Password',
     });
   };
