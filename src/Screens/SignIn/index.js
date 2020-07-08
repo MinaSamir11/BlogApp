@@ -145,7 +145,7 @@ const SignIn = props => {
       IsLoadingModalVisible(true);
       dispatch(
         Auth.SignInAuth({
-          Email: formState.Account.Email,
+          Email: formState.Account.Email.toLowerCase(), // email in this case not sensitive
           Password: formState.Account.Password,
         }),
       );
