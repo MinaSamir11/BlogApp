@@ -110,7 +110,7 @@ const AddPost = props => {
           flex: 1,
           marginLeft: 0,
         }}
-        />
+      />
       <Input
         PlaceHolder={'Title'}
         ErrorTitle={'In-valid Email'}
