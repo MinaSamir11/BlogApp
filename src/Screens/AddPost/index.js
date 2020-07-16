@@ -41,11 +41,11 @@ const AddPost = props => {
   };
 
   useEffect(() => {
-    if (StatusAddPostResponse != null) {
-      if (StatusAddPostResponse == 200) {
+    if (StatusAddPostResponse !== null) {
+      if (StatusAddPostResponse === 200) {
         IsLoadingModalVisible(false);
         dispatch(setResponse(null));
-      } else if (StatusAddPostResponse == 500) {
+      } else if (StatusAddPostResponse === 500) {
         IsLoadingModalVisible(false);
         setMessagePopUp('Failed to add post, try again');
         setBtn('Retry');
@@ -71,7 +71,7 @@ const AddPost = props => {
       var today = new Date().toISOString().slice(0, 10);
 
       let Region;
-      if (props.route.params == undefined) {
+      if (props.route.params === undefined) {
         Region = {
           latitude: null,
           longitude: null,
@@ -84,7 +84,7 @@ const AddPost = props => {
           Description: Descp,
           Date: today,
           Region:
-            props.route.params == undefined
+            props.route.params === undefined
               ? Region
               : props.route.params.Region,
         }),
@@ -110,8 +110,7 @@ const AddPost = props => {
           flex: 1,
           marginLeft: 0,
         }}
-      />
-
+        />
       <Input
         PlaceHolder={'Title'}
         ErrorTitle={'In-valid Email'}
